@@ -1,0 +1,49 @@
+﻿@model IEnumerable<EscenariosCSharpJavaScriptAjax.Controllers.Persona>
+
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Edad)
+        </th>
+        <th></th>
+    </tr>
+
+    @*@foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Edad)
+                </td>
+                <th></th>
+            </tr>
+        }*@
+
+    @foreach (var persona in Model)
+        {
+            <tr>
+                <td>
+                    @Ajax.ActionLink(persona.Nombre, "DetallePersona", new { Nombre = persona.Nombre}, new AjaxOptions()
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "DetallePersona"
+                   })
+                </td>
+                <td>
+                    @persona.Edad
+                </td>
+                <th></th>
+            </tr>
+        }
+
+</table>
+
+<div id="DetallePersona">
+
+</div>

@@ -1,0 +1,445 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<h3>C# vs Javascript vs Ajax</h3>
+
+<div id="div-alerta" class="alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    This is an alert box.
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="col-separador">
+            <h4>C# (postack)</h4>
+            @using (Html.BeginForm("DuplicadorCantidad_CS", null))
+            {
+                <span>Cantidad a duplicar:</span>
+                <input type="number" name="cantidadCS" />
+                <input class="btn btn-primary" type="submit" value="Calcular" />
+                <div>Resultado: @ViewBag.Resultado</div>
+            }
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="col-separador">
+            <h4>Javascript (sin postback)</h4>
+            <span>Cantidad a duplicar:</span>
+            <input type="number" name="cantidad-js" id="cantidad-js" />
+            <input class="btn btn-primary" type="button" value="Calcular" id="btn-js" />
+            <div>Resultado:<span id="resultado-js"></span></div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="col-separador">
+            <h4>Ajax (postack parcial)</h4>
+            @using (Ajax.BeginForm("DuplicadorCantidad_Ajax", "Home",
+                new AjaxOptions()
+                {
+                    HttpMethod = "POST",
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "resultado-ajax"
+                }))
+            {
+                <span>Cantidad a duplicar:</span>
+                <input type="number" name="cantidadAjax" />
+                <input class="btn btn-primary" type="submit" value="Calcular" name="btn-cantidad-ajax" />
+                <div>Resultado:<span id="resultado-ajax"></span></div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h3>Ejemplo 1 : Jquery.post simple</h3>
+
+        @Html.TextBox("txtDuplicador")
+        <input type="button" value="Duplicar!" id="btnDuplicar" />
+        <br />
+        Duplicado: <span id="spanDuplicado"></span>
+    </div>
+    <div class="col-md-4">
+        <h3>Ejemplo 2 : Jquery.post enviando un objeto</h3>
+
+        <div>
+            <label>Nombre: </label>
+            <input type="text" id="txtNombre" />
+        </div>
+        <div>
+            <label>Edad: </label>
+            <input type="number" id="txtEdad" />
+        </div>
+        <input type="button" value="Crear" id="btnCrearPersona" />
+    </div>
+    <div class="col-md-4">
+        <h3>Ejemplo 3 : Jquery.get - Cargar una sección de la página de manera asícrona</h3>
+
+        <input type="button" value="Cargar" id="btnCargar" />
+
+        <div id="divGet">
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h3>Ejemplo 1 : Ajax.Form - Ejemplo básico</h3>
+
+        @using (Ajax.BeginForm("Duplicador", new AjaxOptions()
+        {
+            HttpMethod = "POST",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "spanDuplicado2"
+        }))
+        {
+            <input type="number" name="cantidad" /> <input type="submit" value="Duplicar" />
+        }
+
+        Resultado: <span id="spanDuplicado2"></span>
+    </div>
+    <div class="col-md-4">
+        <h3>Ejemplo 2 : Ajax.Form - Loading, confirm</h3>
+
+        @using (Ajax.BeginForm("Duplicador2", new AjaxOptions()
+        {
+            HttpMethod = "POST",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "spanDuplicado2",
+            LoadingElementId = "loading",
+            Confirm = "Está seguro que desea duplicar el número"
+
+        }))
+        {
+            <input type="number" name="cantidad" /> <input type="submit" value="Duplicar" />
+            <img src="~/Content/images/loading.gif" style="display:none;width:54px;" id="loading" />
+        }
+
+        Resultado: <span id="spanDuplicado2"></span>
+    </div>
+    <div class="col-md-4">
+        <h3>Ejemplo 3 : Ajax.Form - Funciones de Javascript</h3>
+
+        @using (Ajax.BeginForm("Duplicador", new AjaxOptions()
+        {
+            HttpMethod = "POST",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "spanDuplicado3",
+            OnBegin = "onBegin",
+            OnSuccess = "onSuccess",
+            OnComplete = "onComplete",
+            OnFailure = "onFailure"
+
+        }))
+        {
+            <input type="number" name="cantidad" /> <input type="submit" value="Duplicar" />
+        }
+
+        Resultado: <span id="spanDuplicado3"></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h3>Ejemplo 1 : Ajax.ActionLink Básico - Cargando una sección</h3>
+
+        @Ajax.ActionLink("Cargar Sección", "SeccionPrueba", new AjaxOptions()
+        {
+            HttpMethod = "GET",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "resultado"
+        })
+        <div id="resultado">
+
+        </div>
+
+    </div>
+    <div class="col-md-4">
+        <h3>Ejemplo 2 : Ajax.ActionLink - RoutesValues, HtmlAttributes</h3>
+
+        @Ajax.ActionLink("Cargar Sección", "SeccionPrueba", null, new AjaxOptions()
+   {
+       HttpMethod = "GET",
+       InsertionMode = InsertionMode.Replace,
+       UpdateTargetId = "resultado"
+   },new { @class = "btn btn-success"})
+        <div id="resultado">
+
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h3>Ejemplo 3 : Ajax.Form - Funciones de Javascript</h3>
+
+        @using (Ajax.BeginForm("Duplicador", new AjaxOptions()
+        {
+            HttpMethod = "POST",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "spanDuplicado3",
+            OnBegin = "onBegin",
+            OnSuccess = "onSuccess",
+            OnComplete = "onComplete",
+            OnFailure = "onFailure"
+
+        }))
+        {
+            <input type="number" name="cantidad" /> <input type="submit" value="Duplicar" />
+        }
+
+        Resultado: <span id="spanDuplicado3"></span>
+    </div>
+</div>
+
+
+@section scripts{
+    <script scr="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script>
+        function onBegin(respuesta) {
+            console.log("begin");
+        }
+
+        function onSuccess(respuesta) {
+            console.log("success");
+        }
+
+        function onComplete(respuesta) {
+            console.log("complete");
+            console.log(respuesta);
+        }
+
+        function onFailure(a) {
+            console.log("error");
+            console.log(a);
+        }
+
+        $(function () {
+            //Ejemplo 3: jQuery.get
+            $("#btnCargar").click(function () {
+
+                $(this).prop("disabled", "disabled");
+
+                var url = "@Url.Action("SeccionPrueba", "Home")";
+
+
+                //jQuery 1.5+
+                $.get(url).done(function (data) {
+
+                    // Se ejecuta si la operación fue un éxito
+                    $("#divGet").append(data);
+
+                }).fail(manejarErrorAjax).always(function () {
+
+                    // Esta función siempre se ejecuta
+                });
+            });
+
+            // Se ejecuta si hubo error
+            function manejarErrorAjax(err) {
+                // err.responseText es el texto del error (no siempre recomendable mostrar)
+                console.log(err.responseText);
+            }
+        });
+        $(function () {
+            //Ejemplo 2: jQuery.post enviando un objeto
+            $("#btnCrearPersona").click(function () {
+
+                var url = "@Url.Action("CrearPersona", "Home")";
+                var nombre = $("#txtNombre").val();
+                var edad = $("#txtEdad").val();
+                var data = { Nombre: nombre, Edad:edad };
+
+                //jQuery 1.5+
+                $.post(url, data).done(function (data) {
+                    if (data.OK) {
+                        $("#div-alerta").removeClass("alert-danger").addClass("alert-success").slideDown(200);
+                    } else {
+                        $("#div-alerta").removeClass("alert-success").addClass("alert-danger").slideDown(200);
+                    }
+                    // Se ejecuta si la operación fue un éxito
+                    $("#mensaje-alerta").html(data.Mensaje);
+
+                }).fail(manejarErrorAjax).always(function () {
+
+                    // Esta función siempre se ejecuta
+                });
+            });
+
+            $("#btn-cerrar-alerta").click(function () {
+                $(this).parent().slideUp(200);
+            })
+            // Se ejecuta si hubo error
+            function manejarErrorAjax(err) {
+                // err.responseText es el texto del error (no siempre recomendable mostrar)
+                console.log(err.responseText);
+            }
+        });
+
+        $(function () {
+            //Ejemplo 1: jQuery.post simple
+            $("#btnDuplicar").click(function () {
+
+                var url = "@Url.Action("Duplicador", "Home")";
+                var cantidad = $("#txtDuplicador").val();
+                var data = { cantidad: cantidad };
+
+                //jQuery 1.5+
+                $.post(url, data).done(function (data) {
+
+                    // Se ejecuta si la operación fue un éxito
+                    $("#spanDuplicado").html(data);
+
+                }).fail(manejarErrorAjax).always(function () {
+
+                    // Esta función siempre se ejecuta
+                });
+            });
+
+            // Se ejecuta si hubo error
+            function manejarErrorAjax(err) {
+                // err.responseText es el texto del error (no siempre recomendable mostrar)
+                console.log(err.responseText);
+            }
+        });
+
+        $(function () {
+            $("#btn-js").click(function () {
+                var cantidad = document.getElementById('cantidad-js').value;
+                var duplicado = duplicador(cantidad);
+                document.getElementById('resultado-js').innerHTML = duplicado;
+            });
+
+            function duplicador(cantidad) {
+                return cantidad * 2;
+            }
+
+            ejemploJavascript();
+
+            function ejemploJavascript() {
+                // En general, C# y javascript se parecen bastante en sintaxis.
+
+                var a = 5;
+                var nombre = "Felipe";
+                nombre = 7 //cambio de tipo
+
+                console.log("mi nombre es: " + nombre);
+
+                //comparador no estricto == (compara valor, no el tipo)
+
+                if (a == 5) { // verdadero
+
+                } else if (a == 6) {
+
+                } else {
+
+                }
+
+                if (a == "5") { // verdadero
+
+                }
+
+                if (a == 6) { // falso
+
+                }
+
+                //comparador estricto == (compara valor y tipo)
+
+                if (a === 5) { // verdadero
+
+                }
+
+                if (a === "5") { // falso
+
+                }
+
+                //Igual que en C#, comparamos cantidades numericas con >, <, >=, <= ,!=
+                if (a > 2) { // Verdadero
+
+                }
+
+                //Igual que en C#, podemos utilizar && y || para operaciones logicas
+                if (a > 2 && a < 7) { // Verdadero
+
+                }
+
+                // Arreglos
+
+                var miArreglo = [];
+
+                miArreglo.push(4); // agregamos un elemento al arreglo
+                miArreglo.push(5);
+                miArreglo.push('Hola');
+
+                console.log(miArreglo);
+
+                miArreglo.splice(2, 1); // elimino el tercer elemento del arreglo
+                console.log(miArreglo);
+
+                miArreglo.push("hola2");
+                var ultimoElemento = miArreglo.pop();  // remueve y devuelve el último elemento del arreglo ("hola2")
+
+                //La función map me permite aplicarle el resultado de una función a cada valor del
+                //arreglo. Aquí vemos una función anónima (en C# utilizamos el operador lambda)
+                var miArregloDuplicado = miArreglo.map(function (valor) {
+                    return valor * 2;
+                });
+
+                console.log("Arreglo con los elementos duplicados");
+                console.log(miArregloDuplicado);
+
+                var sonTodosMenoresQue10 = miArreglo.every(esMenorQue10); // Verdadero
+
+                var sonTodosMenoresA5 = miArreglo.every(function (valor) {
+                    return valor === 5;
+                }); // falso
+
+                var algunElementoEs5 = miArreglo.some(function (valor) {
+                    return valor === 5;
+                }); // Verdadero
+
+                var numerosPares = miArreglo.filter(function (valor) {
+                    return valor % 2 === 0;
+                });
+
+                console.log("Números pares del arreglo:");
+                console.log(numerosPares);
+
+                // ...y más funciones de arreglos!
+
+                // Objetos
+
+                var miObjeto = {}; // un objeto vacio
+
+                var miObjeto2 = {
+                    nombre: "felipe", propiedad2: 42, unaFuncion: esMenorQue10,
+                    otraFuncion: function (valor) { return valor * 2; }
+                };
+
+                var esMenor = miObjeto2.unaFuncion(9);
+
+                // Le agregamos la propiedad apellido al objeto
+                miObjeto.apellido = "Rodríguez";
+
+                console.log(miObjeto);
+
+                //funciones especiales
+
+                setTimeout(function () {
+                    //Esta función se ejecuta luego de 2 segundos
+                }, 2000);
+
+                setInterval(function () {
+                    // Esta función se ejecuta cada 3 segundos
+                    //console.log(new Date());
+                }, 3000);
+
+                // ¡... y  mucho más!
+
+            }
+
+            function esMenorQue10(valor) {
+                return valor < 10;
+            }
+        });
+    </script>
+}
