@@ -26,6 +26,12 @@ namespace EscenariosCSharpJavaScriptAjax
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            // Uniendo y minificando archivos de una carpeta ,sin importar el orden
+            bundles.Add(new ScriptBundle("~/bundles/lib").IncludeDirectory("~/Scripts/lib", "*.js"));
+
+            //Uniendo y minificando Javascript y CSS  ** Tambien se puede hacer desde el Web.config, seteando <compilation debug="true" en false y BundleTable no hace falta
+            BundleTable.EnableOptimizations = true;
         }
     }
 }
