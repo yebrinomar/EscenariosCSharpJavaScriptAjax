@@ -1,0 +1,29 @@
+﻿@model List<EscenariosCSharpJavaScriptAjax.Controllers.Persona>
+
+@if (Model.Count == 0)
+{
+    <p>No existen resultados para mostrar.</p>
+}
+else {
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Nombre</td>
+                <td>Edad</td>
+                <td>Altura</td>
+                <td>Peso</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ( var persona in Model)
+            {
+                <tr>
+                    <td>@persona.Nombre</td>
+                    <td>@persona.Edad</td>
+                    <td>@persona.Altura</td>
+                    <td>@persona.Peso</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -67,6 +67,81 @@ namespace EscenariosCSharpJavaScriptAjax.Controllers
             return Json(resultado);
         }
 
+        public JsonResult BuscarPersonas(string term)
+        {
+            //using (ModuloAjaxApplicationContext db = new ModuloAjaxApplicationContext())
+            //{
+            //    var resultado = db.Personas.Where(x => x.Nombre.Contains(term))
+            //        .Select(x => x.Nombre).Take(5).ToList();
+            //    return Json(resultado, JsonRequestBehavior.AllowGet);
+            //}
+
+            var personas = new List<Persona>()
+            {
+                new Persona() { Nombre = "Felipe", Edad = 999, Altura=191, Peso =87},
+                new Persona() { Nombre = "Claudia", Edad = 44, Altura=182, Peso =95},
+                new Persona() { Nombre = "Génesis", Edad = 23, Altura=178, Peso =88},
+                new Persona() { Nombre = "Pedro", Edad = 52, Altura=154, Peso =78},
+                new Persona() { Nombre = "Juan", Edad = 76, Altura=157, Peso =83 },
+                new Persona() { Nombre = "Raul", Edad = 23, Altura=178, Peso =88},
+                new Persona() { Nombre = "Vicente", Edad = 52, Altura=154, Peso =78},
+                new Persona() { Nombre = "Rodolfo", Edad = 76, Altura=157, Peso =83 },
+                new Persona() { Nombre = "Alfredo", Edad = 23, Altura=178, Peso =88},
+                new Persona() { Nombre = "Carla", Edad = 52, Altura=154, Peso =78},
+                new Persona() { Nombre = "Fernanda", Edad = 76, Altura=157, Peso =83 }
+            };
+
+            var resultado = personas.Where(x => x.Nombre.Contains(term))
+                    .Select(x => x.Nombre).Take(5).ToList();
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+
+        }
+
+        [HttpPost]
+        public PartialViewResult CambioSlider(int min, int max)
+        {
+            //using (ModuloAjaxApplicationContext db = new ModuloAjaxApplicationContext())
+            //{
+            //    var query = db.Personas.Where(x => x.Edad >= min);
+            //     if(max < 61)
+            //    {
+            //        query = query.Where(x => x.Edad <= max);
+            //    }
+
+            //    var personas = query.ToList();
+
+            //    PartialView("_personas", personas);
+            //}
+            var query = new List<Persona>()
+            {
+                new Persona() { Nombre = "Felipe", Edad = 999, Altura=191, Peso =87},
+                new Persona() { Nombre = "Claudia", Edad = 44, Altura=182, Peso =95},
+                new Persona() { Nombre = "Génesis", Edad = 23, Altura=178, Peso =88},
+                new Persona() { Nombre = "Pedro", Edad = 52, Altura=154, Peso =78},
+                new Persona() { Nombre = "Juan", Edad = 76, Altura=157, Peso =83 },
+                new Persona() { Nombre = "Raul", Edad = 23, Altura=178, Peso =88},
+                new Persona() { Nombre = "Vicente", Edad = 55, Altura=154, Peso =78},
+                new Persona() { Nombre = "Rodolfo", Edad = 47, Altura=157, Peso =83 },
+                new Persona() { Nombre = "Alfredo", Edad = 23, Altura=178, Peso =88},
+                new Persona() { Nombre = "Carla", Edad = 12, Altura=154, Peso =78},
+                new Persona() { Nombre = "Fernanda", Edad = 17, Altura=157, Peso =83 },
+                new Persona() { Nombre = "Gabriel", Edad = 19, Altura=178, Peso =88},
+                new Persona() { Nombre = "Leopoldo", Edad = 33, Altura=154, Peso =78},
+                new Persona() { Nombre = "Hugo", Edad = 25, Altura=157, Peso =83 }
+            };
+
+            query = query.Where(x => x.Edad >= min).ToList();
+
+            if (max < 61)
+            {
+                query = query.Where(x => x.Edad <= max).ToList();
+            }
+
+            var personas = query;
+
+            return PartialView("_personas", personas);
+        }
+
         public PartialViewResult SeccionPrueba()
         {
             var personas = new List<Persona>()
