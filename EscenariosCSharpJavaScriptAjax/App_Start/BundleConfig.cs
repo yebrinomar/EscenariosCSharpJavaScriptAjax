@@ -8,7 +8,9 @@ namespace EscenariosCSharpJavaScriptAjax
         // Para obtener más información sobre las uniones, visite https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+            //Para usar CDN setear en true
+            bundles.UseCdn = true;
+            bundles.Add(new ScriptBundle("~/bundles/jquery", "https://code.jquery.com/jquery-3.3.1.min.js").Include(
                         "~/Scripts/jquery-{version}.js", "~/Scripts/jquery.unobtrusive-ajax.js", "~/Scripts/jquery-ui-1.12.1.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -31,7 +33,7 @@ namespace EscenariosCSharpJavaScriptAjax
             bundles.Add(new ScriptBundle("~/bundles/lib").IncludeDirectory("~/Scripts/lib", "*.js"));
 
             //Uniendo y minificando Javascript y CSS  ** Tambien se puede hacer desde el Web.config, seteando <compilation debug="true" en false y BundleTable no hace falta
-            BundleTable.EnableOptimizations = true;
+            //BundleTable.EnableOptimizations = true;
         }
     }
 }

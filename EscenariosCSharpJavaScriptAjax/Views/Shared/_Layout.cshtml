@@ -38,6 +38,12 @@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
+    @*Esto se llama Falsy, "como si fuera falso", al ser evaluado en un contexto booleano se evalua a falso*@
+    <script>(window.jQuery) || document.write("<script src='/Scripts/jquery-1.12.4.js'><\/script>")</script>
+    <script>$(function () {
+        alert("jQuery ha sido cargado correctamente");
+        })
+    </script>
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/lib")
     @RenderSection("scripts", required: false)
